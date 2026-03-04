@@ -1,0 +1,47 @@
+erDiagram
+    %% nome_responsavel caso seje menor de idade 
+    PACIENTE{
+        int id PK
+        char Nome
+        date data_Nascimento
+        char cpf 
+        char cep
+        char sexo
+        char endereco 
+        char nome_responsavel 
+        int telefone
+
+    }
+    
+    PROFISSIONAL{
+        int id PK
+        char Nome
+        char profissão
+        char local_trabalho
+        char conselho_regional
+        int Nr_conselho_regional
+        int telefone
+        char email
+        char cpf
+
+    }
+
+    ATENDIMENTO{
+        int id PK
+        int id_paciente FK
+        int id_profissional FK
+        
+    }
+
+    DIM_TEMPO {
+        
+    }
+
+    DIM_LOJA {
+        
+    }
+
+    FATO_VENDAS ||--|| DIM_CLIENTE : possui
+    FATO_VENDAS ||--|| DIM_PRODUTO : possui
+    FATO_VENDAS ||--|| DIM_TEMPO : possui
+    FATO_VENDAS ||--|| DIM_LOJA : possui
