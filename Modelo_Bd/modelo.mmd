@@ -33,15 +33,23 @@ erDiagram
         
     }
 
-    DIM_TEMPO {
-        
+    PRONTUARIO {
+        int id_profissional FK 
+        int id_paciente FK 
+        int id_atendimento FK
+        char Nome
+        date data_Nascimento
+        char sexo
     }
 
-    DIM_LOJA {
-        
-    }
+    
+    %% Relações do Atendimento
 
-    FATO_VENDAS ||--|| DIM_CLIENTE : possui
-    FATO_VENDAS ||--|| DIM_PRODUTO : possui
-    FATO_VENDAS ||--|| DIM_TEMPO : possui
-    FATO_VENDAS ||--|| DIM_LOJA : possui
+    ATENDIMENTO ||--|{ PACIENTE : possui
+    ATENDIMENTO ||--|{ PROFISSIONAL : possui
+    
+    %% Relações do Prontuario
+
+    PRONTUARIO  ||--|{ ATENDIMENTO  : possui
+    PRONTUARIO  ||--|{ PACIENTE : possui
+    
