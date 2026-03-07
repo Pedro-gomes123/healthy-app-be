@@ -1,0 +1,192 @@
+Perfis de Usuário (Atores)
+
+| Sigla | Ator |
+|-------|------|
+| PS | Profissional de Saúde (médico, fisioterapeuta, nutricionista, enfermeiro, psicólogo) |
+| GC | Gestor / Coordenador |
+| PA | Paciente |
+| AS | Administrador do Sistema |
+
+
+1. Módulo-Autenticação e Controle de Acesso
+
+Garante que apenas usuários autorizados acessem o sistema e que cada perfil visualize apenas as informações pertinentes ao seu papel, atendendo à LGPD (Lei nº 13.709/2018).
+
+RF-01 — Cadastro de Profissional
+- Ator(es): AS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir que um Administrador cadastre novos profissionais, informando: nome completo, número de registro profissional 
+  (CRM, CREFITO, CRN etc.), especialidade, e-mail e senha inicial.
+
+ RF-02 — Recuperação de Senha
+- Ator(es): PS, GC, PA
+- Prioridade: Alta
+- Descrição: O sistema deve permitir redefinição de senha por e-mail. O link de redefinição deve expirar em 60 minutos após o envio.
+
+ RF-03 — Controle de Acesso por Perfil (RBAC)
+- Ator(es): AS
+- Prioridade: Alta
+- Descrição: O sistema deve implementar controle de acesso baseado em perfis (RBAC). 
+  Cada perfil (Profissional, Gestor, Paciente, Administrador) deve ter permissões distintas de leitura, escrita e exclusão.
+
+ RF-04 — Vínculo Profissional–Paciente
+- Ator(es): AS, GC
+- Prioridade: Alta
+- Descrição: O sistema deve permitir vincular um ou mais profissionais a um paciente,
+  definindo quais especialidades compõem a equipe de cuidado daquele paciente.
+
+ RF-05 — Registro de Auditoria de Acesso
+- Ator(es): AS
+- Prioridade: Alta
+- Descrição: O sistema deve registrar log de todas as ações de login, logout, tentativas falhas e acessos a prontuários, 
+ contendo: identificador do usuário, data/hora e ação realizada. Os logs devem ser imutáveis e acessíveis somente ao Administrador.
+
+---
+
+ 2. Módulo — Prontuário Eletrônico Unificado
+
+Centraliza o histórico clínico do paciente em um único ambiente digital, acessível a todos os profissionais vinculados ao caso.
+
+ RF-06 — Cadastro de Paciente
+- Ator(es): PS, GC
+- Prioridade: Alta
+- Descrição: O sistema deve permitir o cadastro de pacientes com: nome completo, data de nascimento, CPF, sexo biológico, endereço, telefone, contato de emergência,
+  o CPF deve ser validado quanto ao formato e unicidade.
+
+ RF-07 — Registro de Alergias e Restrições
+- Ator(es): PS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir o registro de alergias (medicamentos, alimentos, látex etc.) e restrições clínicas, com campo de descrição livre e nível de severidade (leve, moderada, grave). 
+ Alergias graves devem ser exibidas com destaque visual em todas as telas do prontuário.
+
+ RF-08 — Registro de Medicamentos em Uso
+- Ator(es): PS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir registrar medicamentos em uso pelo paciente, incluindo: nome, dosagem, via de administração, frequência, data de início, data de término
+  (quando aplicável) e profissional responsável pela prescrição.
+
+ RF-09 — Registro de Diagnósticos
+- Ator(es): PS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir registrar diagnósticos com código CID-10, descrição, data, profissional responsável e status (ativo/resolvido).
+
+ RF-10 — Registro de Evoluções Clínicas
+- Ator(es): PS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir que cada profissional registre evoluções clínicas com: data/hora, especialidade, texto e profissional responsável.
+  Evoluções não podem ser editadas após 24 horas do registro; após esse prazo, somente adendos são permitidos.
+
+ RF-11 — Anexo de Exames e Documentos
+- Ator(es): PS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir upload de exames (JPEG, PNG, PDF) com tamanho máximo de 20 MB por arquivo. 
+ Cada anexo deve ser associado a: data de realização, tipo de exame e profissional solicitante.
+
+ RF-11 — Histórico Cronológico do Paciente
+- Ator(es): PS, GC
+- Prioridade: Alta
+- Descrição: O sistema deve exibir uma linha do tempo cronológica de todos os eventos do paciente 
+ (evoluções, exames, prescrições, diagnósticos), filtrável por especialidade, tipo de evento e intervalo de datas.
+
+ RF-12 — Busca de Pacientes
+- Ator(es): PS, GC
+- Prioridade: Alta
+- Descrição: O sistema deve permitir pesquisar pacientes por nome, CPF ou código interno. 
+ A busca deve retornar resultados parciais, ser insensível a maiúsculas/minúsculas e exibir apenas pacientes vinculados ao profissional logado.
+
+ RF-13 — Controle de Versão de Registros
+- Ator(es): AS
+- Prioridade: Média
+- Descrição: O sistema deve manter o histórico de todas as versões de um registro (evoluções, prescrições), 
+ permitindo ao Administrador visualizar o conteúdo anterior e o usuário que realizou a alteração.
+
+---
+
+ 3. Módulo — Canal de Comunicação Formal
+
+Substitui a comunicação informal via WhatsApp por um ambiente estruturado, com rastreabilidade e contexto clínico.
+
+ RF-14 — Mural de Atualizações por Paciente
+- Ator(es): PS, GC
+- Prioridade: Alta
+- Descrição: O sistema deve disponibilizar um mural de mensagens vinculado a cada paciente. 
+ Cada mensagem deve exibir: autor, especialidade, data/hora e conteúdo. Somente profissionais vinculados ao paciente podem visualizar e postar.
+
+ RF-15 — Lembretes Clínicos Entre Profissionais
+- Ator(es): PS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir criar lembretes direcionados a um ou mais membros da equipe
+  (ex.: "Paciente liberado para iniciar fisioterapia"). O lembrete deve conter: destinatário(s), data/hora de criação, texto e status (pendente / visualizado / concluído).
+
+ RF-16 — Notificação de Alterações no Prontuário
+- Ator(es): PS, GC
+- Prioridade: Alta
+- Descrição: O sistema deve emitir notificação interna para todos os profissionais da equipe quando dados críticos forem alterados: 
+ alergias, medicamentos em uso ou diagnósticos. A notificação deve identificar o profissional que realizou a alteração e o campo modificado.
+
+ RF-17 — Marcação de Urgência em Comunicado
+- Ator(es): PS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir marcar um comunicado como "urgente". Comunicados urgentes 
+ devem ser destacados visualmente e gerar notificação imediata (in-app e e-mail) a todos os profissionais da equipe.
+
+ RF-18 — Histórico de Comunicações por Paciente
+- Ator(es): PS, GC, AS
+- Prioridade: Alta
+- Descrição: O sistema deve manter o histórico completo de todas as comunicações do mural e lembretes 
+ por paciente, com busca por palavra-chave, autor e intervalo de datas. O histórico não pode ser excluído pelos profissionais.
+
+---
+
+ 4. Módulo — Preenchimento Assistido por Inteligência Artificial
+
+Reduz o tempo e os erros de digitação por meio de transcrição automática de áudio e análise de documentos.
+
+ RF-19 — Gravação e Transcrição de Áudio
+- Ator(es): PS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir que o profissional grave áudio diretamente pela plataforma. 
+ O áudio deve ser transcrito automaticamente (ex.: Whisper/OpenAI) e o texto exibido para revisão antes de ser inserido no prontuário.
+
+ RF-20 — Extração de Dados de Documentos
+- Ator(es): PS
+- Prioridade: Média
+- Descrição: O sistema deve processar PDFs e imagens (JPEG, PNG) e sugerir o preenchimento automático dos campos do prontuário (ex.: extrair resultados laboratoriais de um PDF). 
+ O profissional deve revisar e confirmar ou corrigir cada sugestão antes da gravação definitiva.
+
+ RF-21 — Revisão e Confirmação Humana Obrigatória
+- Ator(es): PS
+- Prioridade: Alta
+- Descrição: O sistema deve exibir obrigatoriamente o resultado do preenchimento assistido em modo de revisão antes de persistir no prontuário. 
+ O profissional deve confirmar, editar ou rejeitar cada campo sugerido. O sistema não deve gravar dados sem confirmação explícita.
+
+---
+
+ 5. Módulo — Gestão e Relatórios
+
+Oferece ao Gestor e ao Administrador visibilidade sobre a operação da equipe e indicadores de utilização.
+
+RF-23 — Painel do Gestor
+- Ator(es): GC
+- Prioridade: Média
+- Descrição: O sistema deve disponibilizar ao Gestor um painel com: número de pacientes ativos, evoluções registradas por período, profissionais 
+ com pendências de lembrete e alertas de comunicados urgentes não lidos.
+
+RF-24 — Relatório de Atividade por Profissional
+- Ator(es): GC, AS
+- Prioridade: Média
+- Descrição: O sistema deve gerar relatório de atividade por profissional contendo: evoluções registradas, atendimentos realizados e lembretes criados/respondidos em período selecionável. 
+ O relatório deve ser exportável em PDF e CSV.
+
+ RF-25 — Relatório de Pacientes Ativos
+- Ator(es): GC
+- Prioridade: Média
+- Descrição: O sistema deve gerar relatório de pacientes ativos sob cuidado de uma equipe ou profissional específico, com data do último atendimento e especialidades vinculadas.
+
+ RF-26 — Gerenciamento de Equipes
+- Ator(es): AS
+- Prioridade: Alta
+- Descrição: O sistema deve permitir criar, editar e desativar equipes de cuidado, associando profissionais e pacientes. 
+ A desativação de uma equipe não deve excluir os registros históricos.
+
+
