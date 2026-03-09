@@ -1,0 +1,24 @@
+Requisitos Não Funcionais
+
+Capacidade
+Usuários Registrados
+O Banco deve suportar até 300 usuário incluindo pacientes e profissionais, suportando simultaneamente um máximo de 100 usuario 
+Desempenho 
+Tempo de Resposta
+Consultas e operações no banco de dados devem retornar resultados em até  4 segundo em uma carga normal, suportando um   processamento de até 50 novos registros clínicos por dia sem influenciar o desempenho
+Capacidade
+Volume de registro 
+O banco de dados deve suportar o armazenamento de até 200.000 registros 
+registro de log
+O sistema deve registrar logs de auditoria contendo
+identificador do usuário
+data e hora da ação
+tipo de ação realizada
+Os registros de auditoria devem ser imutáveis e acessíveis apenas ao Administrador do Sistema.
+Backucup
+
+O sistema realizará uma carga diária para um outro banco de dados cópia para backup dos dados ( tendo um BD com a configuração -1)
+
+OBS:
+Os dados clínicos dos pacientes devem ser armazenados de forma segura por um período mínimo de 20 anos
+
