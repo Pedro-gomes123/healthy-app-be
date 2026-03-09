@@ -1,0 +1,18 @@
+
+1. Identificação de Pacientes
+Identificação Única do Paciente: Cada paciente deve possuir uma identificação única que deve ser composta por dados pessoais e id de identificação único 
+Cadastro de Pacientes: Cada paciente deve obrigatoriamente estar cadastrado no sistema como paciente para poder possuir um prontuário e ser relacionado a algum profissional 
+2. Profissionais de Saúde
+Identificação do Profissional:  Cada profissional de saúde deve possuir identificação única onde consta o seu órgão regulador dados pessoais e demais informações necessárias acompanhando tudo isso um id único  
+Associação com Registros Clínicos: todo profissional de saúde só pode ser atribuído a um paciente e ter acesso a prontuário a partir da criação de um cadastro e da validação de seu cadastro 
+3. Registros Clínico
+Associação com Paciente:  cada paciente pode e deve possuir apenas um prontuário  
+Associação com Profissional: Os profissionais podem possuir demais pacientes mais devem esta sempre relacionados a eles e possuindo um único identificador não importando 
+Registro Temporal: Todas as atividades dentro do sistema que incluem adição, acesso e remoção de informação deve possuir um log que guarda a hora data e o id unico do usuario 
+Integridade do Histórico:  Os dados devem ser armazenados por no mínimo de 20 anos e não podem ser alterados em casos normais e sempre possuindo uma copia com uma carga de -1
+Controle de Acesso
+Perfis de Usuário:  O sistema deve possuir uma Hierarquia definida entre pacientes, profissionais e administradores para controle de acessos e de permissões a mudanças de dados 
+Integridade dos Dados
+Integridade Referencial :Todos os registros clínicos devem manter integridade referencial com os registros de pacientes e profissionais.
+
+
