@@ -1,0 +1,87 @@
+CREATE TABLE USUARIO (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nome VARCHAR,
+    email VARCHAR,
+    senha_hash VARCHAR,
+    telefone VARCHAR,
+    perfil VARCHAR,
+    crm_conselho VARCHAR,
+    especialidade VARCHAR,
+    ativo INT,
+    criado_em DATE
+);
+
+CREATE TABLE PACIENTE (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    nome VARCHAR,
+    data_nascimento DATE,
+    sexo VARCHAR,
+    cpf VARCHAR,
+    telefone VARCHAR,
+    email VARCHAR,
+    nome_responsavel VARCHAR,
+    ativo INT,
+    criado_em DATE
+);
+
+CREATE TABLE VINCULO (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    usuario_id INT REFERENCES USUARIO(id),
+    paciente_id INT REFERENCES PACIENTE(id),
+    data_inicio DATE,
+    data_fim DATE,
+    ativo INT
+);
+
+CREATE TABLE PRONTUARIO (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    paciente_id INT REFERENCES PACIENTE(id),
+    grupo_sanguineo VARCHAR,
+    observacoes_gerais VARCHAR,
+    criado_em DATE,
+    atualizado_em DATE
+);
+
+CREATE TABLE EVOLUCAO (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    prontuario_id INT REFERENCES PRONTUARIO(id),
+    autor_id INT REFERENCES USUARIO(id),
+    especialidade_autor VARCHAR,
+    descricao VARCHAR,
+    plano_terapeutico VARCHAR,
+    audio_url VARCHAR,
+    transcricao_ia VARCHAR,
+    criado_em DATE
+);
+
+CREATE TABLE ALERGIA (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    prontuario_id INT REFERENCES PRONTUARIO(id),
+    registrado_por INT REFERENCES USUARIO(id),
+    substancia VARCHAR,
+    reacao VARCHAR,
+    gravidade VARCHAR,
+    registrado_em DATE
+);
+
+CREATE TABLE EXAME (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    prontuario_id INT REFERENCES PRONTUARIO(id),
+    solicitado_por INT REFERENCES USUARIO(id),
+    nome VARCHAR,
+    tipo VARCHAR,
+    data_resultado DATE,
+    arquivo_url VARCHAR,
+    status VARCHAR,
+    criado_em DATE
+);
+
+CREATE TABLE MENSAGEM (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    remetente_id INT REFERENCES USUARIO(id),
+    paciente_id INT REFERENCES PACIENTE(id),
+    conteudo VARCHAR,
+    tipo VARCHAR,
+    lida INT,
+    enviado_em DATE
+);

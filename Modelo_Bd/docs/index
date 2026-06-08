@@ -1,0 +1,26 @@
+-- VINCULO
+CREATE INDEX idx_vinculo_usuario ON VINCULO(usuario_id);
+CREATE INDEX idx_vinculo_paciente ON VINCULO(paciente_id);
+
+-- PRONTUARIO
+CREATE INDEX idx_prontuario_paciente ON PRONTUARIO(paciente_id);
+
+-- EVOLUCAO
+CREATE INDEX idx_evolucao_prontuario ON EVOLUCAO(prontuario_id);
+CREATE INDEX idx_evolucao_autor ON EVOLUCAO(autor_id);
+
+-- ALERGIA
+CREATE INDEX idx_alergia_prontuario ON ALERGIA(prontuario_id);
+
+-- EXAME
+CREATE INDEX idx_exame_prontuario ON EXAME(prontuario_id);
+CREATE INDEX idx_exame_solicitado_por ON EXAME(solicitado_por);
+
+-- MENSAGEM
+CREATE INDEX idx_mensagem_remetente ON MENSAGEM(remetente_id);
+CREATE INDEX idx_mensagem_paciente ON MENSAGEM(paciente_id);
+
+-- Campos muito consultados
+CREATE INDEX idx_usuario_email ON USUARIO(email);
+CREATE INDEX idx_paciente_cpf ON PACIENTE(cpf);
+CREATE UNIQUE INDEX idx_paciente_cpf_unique ON PACIENTE(cpf);
