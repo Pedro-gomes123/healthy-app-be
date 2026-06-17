@@ -1,26 +1,17 @@
--- VINCULO
-CREATE INDEX idx_vinculo_usuario ON VINCULO(usuario_id);
-CREATE INDEX idx_vinculo_paciente ON VINCULO(paciente_id);
 
--- PRONTUARIO
-CREATE INDEX idx_prontuario_paciente ON PRONTUARIO(paciente_id);
+CREATE INDEX idx_usuario_perfil_ativo ON supabase.usuario(perfil, ativo);
 
--- EVOLUCAO
-CREATE INDEX idx_evolucao_prontuario ON EVOLUCAO(prontuario_id);
-CREATE INDEX idx_evolucao_autor ON EVOLUCAO(autor_id);
+CREATE INDEX idx_paciente_nome ON supabase.paciente(nome);
+CREATE INDEX idx_paciente_ativo ON supabase.paciente(ativo);
 
--- ALERGIA
-CREATE INDEX idx_alergia_prontuario ON ALERGIA(prontuario_id);
+CREATE INDEX idx_vinculo_usuario_paciente ON supabase.vinculo(usuario_id, paciente_id);
 
--- EXAME
-CREATE INDEX idx_exame_prontuario ON EXAME(prontuario_id);
-CREATE INDEX idx_exame_solicitado_por ON EXAME(solicitado_por);
+CREATE INDEX idx_evolucao_prontuario_data ON supabase.evolucao(prontuario_id, criado_em DESC);
+CREATE INDEX idx_evolucao_autor ON supabase.evolucao(autor_id);
 
--- MENSAGEM
-CREATE INDEX idx_mensagem_remetente ON MENSAGEM(remetente_id);
-CREATE INDEX idx_mensagem_paciente ON MENSAGEM(paciente_id);
 
--- Campos muito consultados
-CREATE INDEX idx_usuario_email ON USUARIO(email);
-CREATE INDEX idx_paciente_cpf ON PACIENTE(cpf);
-CREATE UNIQUE INDEX idx_paciente_cpf_unique ON PACIENTE(cpf);
+CREATE INDEX idx_alergia_prontuario ON supabase.alergia(prontuario_id);
+
+CREATE INDEX idx_exame_prontuario_status ON supabase.exame(prontuario_id, status);
+
+CREATE INDEX idx_mensagem_chat ON supabase.mensagem(remetente_id, paciente_id, enviado_em DESC);

@@ -1,87 +1,88 @@
-CREATE TABLE USUARIO (
+
+CREATE TABLE usuario (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nome VARCHAR,
-    email VARCHAR,
-    senha_hash VARCHAR,
-    telefone VARCHAR,
-    perfil VARCHAR,
-    crm_conselho VARCHAR,
-    especialidade VARCHAR,
-    ativo INT,
-    criado_em DATE
+    nome VARCHAR(150) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    senha_hash VARCHAR(255) NOT NULL,
+    telefone VARCHAR(20),
+    perfil VARCHAR(30) NOT NULL,
+    crm_conselho VARCHAR(50),
+    especialidade VARCHAR(100),
+    ativo BOOLEAN DEFAULT TRUE,
+    criado_em TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE PACIENTE (
+CREATE TABLE paciente (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    nome VARCHAR,
-    data_nascimento DATE,
-    sexo VARCHAR,
-    cpf VARCHAR,
-    telefone VARCHAR,
-    email VARCHAR,
-    nome_responsavel VARCHAR,
-    ativo INT,
-    criado_em DATE
+    nome VARCHAR(150) NOT NULL,
+    data_nascimento DATE NOT NULL,
+    sexo VARCHAR(20),
+    cpf VARCHAR(14) UNIQUE,
+    telefone VARCHAR(20),
+    email VARCHAR(100),
+    nome_responsavel VARCHAR(150),
+    ativo BOOLEAN DEFAULT TRUE,
+    criado_em TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE VINCULO (
+CREATE TABLE vinculo (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    usuario_id INT REFERENCES USUARIO(id),
-    paciente_id INT REFERENCES PACIENTE(id),
-    data_inicio DATE,
+    usuario_id INT REFERENCES usuario(id) ON DELETE CASCADE,
+    paciente_id INT REFERENCES paciente(id) ON DELETE CASCADE,
+    data_inicio DATE NOT NULL,
     data_fim DATE,
-    ativo INT
+    ativo BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE PRONTUARIO (
+CREATE TABLE prontuario (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    paciente_id INT REFERENCES PACIENTE(id),
-    grupo_sanguineo VARCHAR,
-    observacoes_gerais VARCHAR,
-    criado_em DATE,
-    atualizado_em DATE
+    paciente_id INT REFERENCES paciente(id) UNIQUE NOT NULL,
+    grupo_sanguineo VARCHAR(5),
+    observacoes_gerais TEXT,
+    criado_em TIMESTAMPTZ DEFAULT NOW(),
+    atualizado_em TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE EVOLUCAO (
+CREATE TABLE evolucao (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    prontuario_id INT REFERENCES PRONTUARIO(id),
-    autor_id INT REFERENCES USUARIO(id),
-    especialidade_autor VARCHAR,
-    descricao VARCHAR,
-    plano_terapeutico VARCHAR,
-    audio_url VARCHAR,
-    transcricao_ia VARCHAR,
-    criado_em DATE
+    prontuario_id INT REFERENCES prontuario(id) ON DELETE CASCADE,
+    autor_id INT REFERENCES usuario(id),
+    especialidade_autor VARCHAR(100),
+    descricao TEXT NOT NULL,
+    plano_terapeutico TEXT,
+    audio_url VARCHAR(500),
+    transcricao_ia TEXT,
+    criado_em TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE ALERGIA (
+CREATE TABLE alergia (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    prontuario_id INT REFERENCES PRONTUARIO(id),
-    registrado_por INT REFERENCES USUARIO(id),
-    substancia VARCHAR,
-    reacao VARCHAR,
-    gravidade VARCHAR,
-    registrado_em DATE
+    prontuario_id INT REFERENCES prontuario(id) ON DELETE CASCADE,
+    registrado_por INT REFERENCES usuario(id),
+    substancia VARCHAR(100) NOT NULL,
+    reacao VARCHAR(255),
+    gravidade VARCHAR(50),
+    registrado_em TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE EXAME (
+CREATE TABLE exame (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    prontuario_id INT REFERENCES PRONTUARIO(id),
-    solicitado_por INT REFERENCES USUARIO(id),
-    nome VARCHAR,
-    tipo VARCHAR,
+    prontuario_id INT REFERENCES prontuario(id) ON DELETE CASCADE,
+    solicitado_por INT REFERENCES usuario(id),
+    nome VARCHAR(150) NOT NULL,
+    tipo VARCHAR(50),
     data_resultado DATE,
-    arquivo_url VARCHAR,
-    status VARCHAR,
-    criado_em DATE
+    arquivo_url VARCHAR(500),
+    status VARCHAR(50),
+    criado_em TIMESTAMPTZ DEFAULT NOW()
 );
 
-CREATE TABLE MENSAGEM (
+CREATE TABLE mensagem (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    remetente_id INT REFERENCES USUARIO(id),
-    paciente_id INT REFERENCES PACIENTE(id),
-    conteudo VARCHAR,
-    tipo VARCHAR,
-    lida INT,
-    enviado_em DATE
+    remetente_id INT REFERENCES usuario(id),
+    paciente_id INT REFERENCES paciente(id),
+    conteudo TEXT NOT NULL,
+    tipo VARCHAR(30),
+    lida BOOLEAN DEFAULT FALSE,
+    enviado_em TIMESTAMPTZ DEFAULT NOW()
 );
