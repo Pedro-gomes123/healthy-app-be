@@ -1,33 +1,7 @@
-Documentação de Acesso ao Banco de Dados
-
-Informações de Conexão
-As informações abaixo são necessárias para estabelecer conexão com o banco de dados PostgreSQL.
-
-Parâmetro	Valor
-Host	db.vqiffxyfctzbtwxxpxsa.supabase.co
-Porta	5432
-Banco de Dados	postgres
-Usuário	postgres
-Senha	ryPtow-sorfy3-hofhab
-
-Exemplo de String de Conexão
-postgresql://postgres:ryPtow-sorfy3-hofhab@db.vqiffxyfctzbtwxxpxsa.supabase.co:5432/postgres
-
-Utilização
-Essas credenciais podem ser utilizadas para conectar ao banco de dados por meio de:
-DBeaver
-pgAdmin
-DataGrip
-Python (psycopg2, SQLAlchemy)
-Aplicações Java, .NET, Node.js, etc.
-Ferramentas de BI como Power BI e Tableau
-Configuração no DBeaver
-
-Preencha os campos da seguinte forma:
-Host: db.vqiffxyfctzbtwxxpxsa.supabase.co
-Port: 5432
-Database: postgres
-Username: postgres
-Password: ryPtow-sorfy3-hofhab
-
-Após preencher os dados, clique em Test Connection para validar o acesso e, em seguida, em Finish para salvar a conexão.
+ATTACH 'host=db.vqiffxyfctzbtwxxpxsa.supabase.co
+dbname=postgres
+user=postgres
+password=eTbWi0slWlHjqWXF
+port=5432
+sslmode=require'
+AS supabase (TYPE postgres);
